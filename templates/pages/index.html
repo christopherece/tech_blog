@@ -1,0 +1,124 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <!-- Blog List Start -->
+    {% if posts %}
+        {% for post in posts %}
+            <div class="container bg-white pt-5">
+                <div class="row blog-item px-3 pb-5">
+                    <div class="col-md-5">
+                        <img class="img-fluid mb-4 mb-md-0" src="{{ post.photo_main.url }}" alt="Image">
+                    </div>
+                    <div class="col-md-7" style="text-align: justify">
+                        <h5 class="md-4 mb-2 bg-white font-weight-bold">{{post.title}}</h5>
+                        <div class="d-flex mb-3">
+                            <small class="mr-2 text-muted"><i class="fa fa-calendar-alt"></i> {{post.created_at|date:"Y-m-d"}}</small>
+                            <small class="mr-2 text-muted"><i class="fa fa-folder"></i> 
+                                {% for category in post.categories.all %}
+                                    {{ category.name }},
+                                {% endfor %}
+                            </small>
+                            <small class="mr-2 text-muted"><i class="fa fa-comments"></i> {{total_comments}} Comments</small>
+                        </div>
+                        <p style="text-align: justify;">
+                            {% with post.description|slice:"300" as truncated_content %}
+                            {{ truncated_content | safe }} ....
+                           
+                            {% endwith %}
+                        </p>
+                        {% if post.description|length > truncated_content|length %}
+                        <a class="btn btn-link p-0" href="{% url 'post' post.id %}">Read More <i class="fa fa-angle-right"></i></a>
+                         {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-md-12">
+            <p>No Post available</p>
+        </div>
+    {% endif %}
+    <!-- Blog List End -->
+<p></p>
+    <div class="row pb-5">
+        <nav aria-label="Page navigation">
+            {% if posts.has_other_pages %}
+                    <ul class="pagination m-0 mx-3">
+                        {% if posts.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{posts.previous_page_number}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+
+                        {% else %}
+                            <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            </li>
+                        {% endif %}
+
+                        {% for i in posts.paginator.page_range %}
+                            {% if posts.number == i %}
+                                <li class="page-item active">
+                                    <a href="" class="page-link">
+                                        {{i}}
+                                    </a>
+                                </li>
+
+                            {% else %}
+                                <li class="page-item">
+                                    <a href="?page={{i}}" class="page-link">
+                                        {{i}}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if posts.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{posts.next_page_number}}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+
+                        {% else %}
+                            <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+            {% endif %}
+        </nav>
+    </div>
+    
+    
+    <!-- Subscribe Start -->
+    <div class="container py-2 px-4 bg-secondary text-center">
+        <h3 class="text-white font-weight-bold">Subscribe My Newsletter</h3>
+        <p class="text-white">Subscribe and get my latest article in your inbox</p>
+        <form class="form-inline justify-content-center">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Your Email">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">Subscribe</button>
+                </div>
+              </div>
+        </form>
+    </div>
+    <!-- Subscribe End -->
+    
+
+
+{% endblock %}
