@@ -21,7 +21,7 @@ def index(request):
 
 def submitcontact(request):
     if request.method == 'POST':
-        name = request.POST['name']
+        description = request.POST['description']
         email = request.POST['email']
         subject = request.POST['subject']
         message = request.POST['message']
@@ -35,7 +35,7 @@ def submitcontact(request):
             return render(request, 'pages/contact.html')
 
     contact = Contact(
-        name = name,
+        description = description,
         email = email, 
         subject = subject,
         message = message,

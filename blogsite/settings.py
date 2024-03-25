@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-o%q36rib@j7w495x@nagjbns9=!asq)4(5x(!n$4w#$xywb7(m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['techblog.christopherancheta.co.nz','192.168.10.221']
+ALLOWED_HOSTS = ['techblog.christopherancheta.co.nz','192.168.10.221','localhost']
 CSRF_TRUSTED_ORIGINS = [
     'https://techblog.christopherancheta.co.nz','http://techblog.christopherancheta.co.nz'
 ]
@@ -35,6 +35,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
     'posts.apps.PostsConfig',
     'django.contrib.admin',
