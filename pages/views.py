@@ -12,10 +12,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 def index(request):
     # Fetch all categories
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('name')
 
     # Get all published posts
-    posts = Post.objects.filter(is_published=True)
+    posts = Post.objects.filter(is_published=True).order_by('-created_at')
 
     # Get the selected category ID from the query parameters
     category_id = request.GET.get('category')
@@ -38,6 +38,7 @@ def index(request):
     return render(request, 'pages/index.html', context)
 
 def submitcontact(request):
+    categories = Category.objects.all().order_by('name')
     if request.method == 'POST':
         description = request.POST['description']
         email = request.POST['email']
@@ -62,10 +63,13 @@ def submitcontact(request):
 
     contact.save()
     messages.success(request, 'Your message has been submitted')
-    return render(request, 'pages/contact.html')
+    return render(request, 'pages/contact.html',{'categories':categories})
 
 def about(request):
-    return render(request, 'pages/about.html')
+    categories = Category.objects.all().order_by('name')
 
-def contact(request):
-    return render(request, 'pages/contact.html')
+    return render(request, 'pages/about.html',{'categories':categories})
+
+def contact(request):    
+    categories = Category.objects.all().order_by('name')
+    return render(request, 'pages/contact.html',{'categories':categories})
