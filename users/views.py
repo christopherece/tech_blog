@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 from django.contrib.auth.models import Group
+from posts.models import Category
+
 
 
 from django.contrib import messages, auth
@@ -37,6 +39,8 @@ def registerUser(request):
 # Create your views here.
 def loginUser(request):
     page = 'login'
+    categories = Category.objects.all().order_by('name')
+
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -46,7 +50,7 @@ def loginUser(request):
             user = User.objects.get(username=username)
         except:
             messages.error(request, 'User does not Exist!')
-            return redirect('loginUser')  
+            return redirect('loginUser',{'categories':categories}) 
 
         user = authenticate(request, username=username, password=password)
 
@@ -61,20 +65,20 @@ def loginUser(request):
         else:
             messages.error(request, 'Invalid Password!')
 
-            return redirect('loginUser')    
-    return render(request, 'users/login_register.html')
+            return redirect('loginUser',{'categories':categories})    
+    return render(request, 'users/login_register.html',{'categories':categories})
 
 def logoutUser(request):
     logout(request)
     messages.success(request, 'You are now log out')
-    return redirect('loginUser')
+    return redirect('index')
 
     
 @login_required(login_url='loginUser')
 def admin_logout(request):
     logout(request)
     messages.success(request, 'You are now log out')
-    return redirect('loginUser')
+    return redirect('index')
     
 
 
