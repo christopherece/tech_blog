@@ -5,17 +5,35 @@ from .models import Contact
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib import messages
 from django.utils import timezone
+from django.shortcuts import render, redirect, get_object_or_404
+
 
 
 # Create your views here.
 def index(request):
-    posts = Post.objects.order_by('-created_at').filter(is_published=True)
+    # Fetch all categories
+    categories = Category.objects.all()
+
+    # Get all published posts
+    posts = Post.objects.filter(is_published=True)
+
+    # Get the selected category ID from the query parameters
+    category_id = request.GET.get('category')
+
+    # If a category ID is provided, filter posts by that category
+    if category_id:
+        category = get_object_or_404(Category, pk=category_id)
+        posts = posts.filter(categories=category)
+
+    # Pagination
     paginator = Paginator(posts, 6)
-    page = request.GET.get('page')
-    paged_posts = paginator.get_page(page)
-    
+    page_number = request.GET.get('page')
+    paged_posts = paginator.get_page(page_number)
+
     context = {
-        'posts': paged_posts
+        'posts': paged_posts,
+        'categories': categories,
+        'selected_category_id': category_id,
     }
     return render(request, 'pages/index.html', context)
 

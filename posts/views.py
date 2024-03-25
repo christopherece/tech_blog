@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Post, Comment
+from .models import Post, Comment, Category
 from .forms import CommentForm
 
 # Create your views here.

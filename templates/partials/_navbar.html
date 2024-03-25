@@ -26,16 +26,16 @@
                     About
                 </a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
                     <div class="dropdown-menu">
-                        <a href="" class="dropdown-item">OpenSource App</a>
-                        <a href="" class="dropdown-item">Reviews</a>
-                        <a href="" class="dropdown-item">Coding</a>
-                        <a href="" class="dropdown-item">Phone</a>
-                        <a href="" class="dropdown-item">Tools</a>
-
+                        {% for category in categories %}
+                            <a href="?category={{ category.id }}" class="dropdown-item {% if category.id == selected_category_id %}active{% endif %}">
+                                {{ category.name }}
+                            </a>
+                        {% endfor %}
                     </div>
                 </div>
+                
                 <a href="{% url 'contact' %}"
                     {% if 'contact' in request.path %}
                         class="nav-link active"
