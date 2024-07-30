@@ -41,10 +41,10 @@ def index(request):
 def submitcontact(request):
     categories = Category.objects.all().order_by('name')
     if request.method == 'POST':
-        description = request.POST['description']
+        name = request.POST['name']
         email = request.POST['email']
         subject = request.POST['subject']
-        message = request.POST['message']
+        description = request.POST['description']
 
     # Check if the email is already exist
         # Check if the email and date combination already exists
@@ -58,7 +58,7 @@ def submitcontact(request):
         description = description,
         email = email, 
         subject = subject,
-        message = message,
+        name = name,
 
     )
 
