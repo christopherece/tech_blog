@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import datetime
+from django.utils import timezone
+
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 
@@ -17,7 +19,7 @@ class Post(models.Model):
     description = RichTextField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)  # Set default value
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

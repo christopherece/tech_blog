@@ -80,7 +80,7 @@
             <h5 class="mb-4 font-weight-bold"> {{ total_comments }} Comments</h5>
             {% for comment in comments %}
                 <div class="media mb-2">
-                    <img src="{% static 'img/user.jpg' %}" alt="Image" class="mr-3 mt-1 rounded-circle" style="width:60px;">
+                    <img src="{% static 'img/user-default.png' %}" alt="Image" class="mr-3 mt-1 rounded-circle" style="width:60px;">
                     <div class="media-body">
                         <h5> {{comment.author}} <small><i>{{comment.created_at|date:"Y-m-d"}}</i></small></h5>
                         <p>
