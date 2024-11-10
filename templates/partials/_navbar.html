@@ -26,10 +26,10 @@
                     About
                 </a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+                    <a href="{% url 'index' %}" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
                     <div class="dropdown-menu">
                         {% for category in categories %}
-                            <a href="?category={{ category.id }}" class="dropdown-item {% if category.id == selected_category_id %}active{% endif %}">
+                            <a href="/?category={{ category.id }}" class="dropdown-item">
                                 {{ category.name }}
                             </a>
                         {% endfor %}
