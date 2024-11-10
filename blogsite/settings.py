@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-o%q36rib@j7w495x@nagjbns9=!asq)4(5x(!n$4w#$xywb7(m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['techblog.christopherancheta.co.nz','192.168.10.221','localhost']
+ALLOWED_HOSTS = ['techblog.christopherancheta.co.nz','192.168.10.250','localhost','techblog.balaydalakay.com']
 CSRF_TRUSTED_ORIGINS = [
     'https://techblog.christopherancheta.co.nz','http://techblog.christopherancheta.co.nz'
 ]
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'mssql',
+
 ]
 
 MIDDLEWARE = [
@@ -90,12 +92,12 @@ DATABASES = {
         'HOST':'192.168.10.225'
     },
     'default': {
-        # 'ENGINE': 'sql_server.pyodbc',
+        #'ENGINE': 'sql_server.pyodbc',
         'ENGINE': 'mssql',
         'NAME': 'blog_db',
-        'USER': 'sa',
-        'PASSWORD': 'L0c@lH0$t@dm!n!@#4',
-        'HOST': '192.168.10.221',
+        'USER': 'chris',
+        'PASSWORD': 'Nokia5130-c',
+        'HOST': '192.168.10.250',
         'PORT':'1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
@@ -137,6 +139,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+#Email Config
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'balaydalakay@gmail.com'
+EMAIL_HOST_PASSWORD = 'uunhvtwkwynetsng'
+EMAIL_USE_TLS = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'

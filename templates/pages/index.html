@@ -5,10 +5,15 @@
 
 {% block content %}
 
+<div class="container" style="margin-top: 10px;">
+    {% include 'partials/_alerts.html' %}
+</div>
+
     <!-- Blog List Start -->
     {% if posts %}
         {% for post in posts %}
             <div class="container bg-white pt-5">
+
                 <div class="row blog-item px-3 pb-2">
                     <div class="col-md-5">
                         <img class="img-fluid mb-4 mb-md-0" src="{{ post.photo_main.url }}" alt="Image">
@@ -108,9 +113,10 @@
     <div class="container py-2 px-4 bg-secondary text-center">
         <h3 class="text-white font-weight-bold">Subscribe My Newsletter</h3>
         <p class="text-white">Subscribe and get my latest article in your inbox</p>
-        <form class="form-inline justify-content-center">
+        <form name="subscribeme" method="POST" action="{% url 'subscribeme' %}" id="subscribeme" class="form-inline justify-content-center">
+            {% csrf_token %}
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Your Email">
+                <input name="email" type="text" class="form-control" placeholder="Your Email">
                 <div class="input-group-append">
                   <button class="btn btn-primary" type="submit">Subscribe</button>
                 </div>
